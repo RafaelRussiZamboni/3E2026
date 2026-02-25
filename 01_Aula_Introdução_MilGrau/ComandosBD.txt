@@ -1,0 +1,10 @@
+CREATE DATABASE migo; 
+
+CREATE TABLE migo(
+	id INT,
+    nome VARCHAR(45),
+    sobrenome VARCHAR(45),
+    curso VARCHAR(45),
+    PRIMARY KEY(id)
+);
+
