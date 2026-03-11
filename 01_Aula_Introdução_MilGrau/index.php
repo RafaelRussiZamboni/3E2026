@@ -13,7 +13,7 @@
 	<div class="container">
 		<h3>Cadastre seu melhor!!! :) </h3>
 
-		<form action="doIndex.php" method="GET" enctype="multpart/form-data">
+		<form action="doIndex.php" method="POST" enctype="multipart/form-data">
 
 			<!-- NOME DO MANO -->
 			<label class="form-label">
