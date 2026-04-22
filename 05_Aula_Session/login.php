@@ -1,6 +1,14 @@
+<?php
+if(!isset($erro))
+  {
 
+$erro= "";
+  }
 
-
+  else{
+    $erro =$_GET['erro'];
+  }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +36,7 @@
        </div>
 	
 	<div class="container-fluid col-md-2" style="padding:15px">
-      <form role="form" class="smallwidth" action="Dologin.php" method="POST">
+      <form role="form" class="smallwidth" action="doLogin.php" method="POST">
         <h3 class="formheader">Login Empresa</h3>
         <div class="form-group has-feedback">
           <input type="text" class="form-control input-default" name="login" placeholder="Login" required />
