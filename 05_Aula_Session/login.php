@@ -1,13 +1,15 @@
 <?php
 if(!isset($erro))
-  {
+{
 
-$erro= "";
-  }
+  $erro= "";
+}
 
-  else{
-    $erro =$_GET['erro'];
-  }
+else
+{
+  $erro =$_GET['erro'];
+}
+
 ?>
 
 <!DOCTYPE html>

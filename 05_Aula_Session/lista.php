@@ -1,3 +1,12 @@
+<?php
+	//Incluindo o arquivo de verificação
+	include 'verificador.php';
+
+	//Chamando a função de verificar login
+	VerificarLogin();
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +28,7 @@
 	<div class="p-4 mb-4 bg-light rounded">
 		<h1>Listagem de Produtos</h1>
 		<p>Produtos fofos!</p>
+		<p>Bem-vindo: <?php echo $_SESSION['login'] ?></p>
 	</div>
 
 	<!-- Navegação -->
@@ -111,8 +121,8 @@
 				<li class="page-item">
 					<a class="page-link" href="#">&raquo;</a>
 				</li>
-			</ul>
-		</nav>
+			</ul
+>		</nav>
 	</div>
 
 </div>
