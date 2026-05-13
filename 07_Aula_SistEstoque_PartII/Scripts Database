@@ -1,0 +1,21 @@
+CREATE DATABASE projetoteste;
+
+CREATE TABLE produtos(
+    id INT AUTO_INCREMENT,
+    nome VARCHAR(45),
+    descricao VARCHAR(45),
+    id_area INT,
+    preco_uni DOUBLE,
+    moeda VARCHAR(3),
+    pais_origem VARCHAR(45),
+    imagem VARCHAR(45),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE login
+(
+    login VARCHAR(45),
+    senha VARCHAR(45)
+);
+
+INSERT INTO login(login,senha) VALUES ('pedro','123');
