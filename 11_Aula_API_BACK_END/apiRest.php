@@ -1,56 +1,78 @@
 <?php
-	/*
-	   Este script funciona puramente
-	   como o servidos dos dados!!!
-	   Recebe (GET,POST,DELETE) e responde com o JSON!!! :)
-	*/
 
-	//1) Montando o cabeçalho
-	header("Access-Control-Allow-Origin: *");   
-	header("Access-Control-Allow-Method: GET, POST");
-	header("Access-Control-Allow-Headers: Content-Type");
-	header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Content-Type: application/json; charset=UTF-8");
 
-	//2) Tratamento do navegador
-	//O navegador envia uma requisição 'OPTIONS' para saber se servidor é seguro
-	if($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
-	{
-		exit(0); //Vida que segue
-	}
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    exit(0);
+}
 
+$conexao = mysqli_connect('localhost', 'root', '', 'comidinhas');
 
-	//3) Conexão com o DB
-	$conexao = mysqli_connect('localhost','root','','comidinhas');
+if (!$conexao) {
+    echo json_encode(["erro" => "Erro ao conectar com o DB!"]);
+    exit();
+}
 
-	//Verificando conexão
-	if(!$conexao)
-	{
-		echo json_encode(["Erro" => "Erro ao conectar com o DB!"]);
-		exit(); // Mata o script
-	}
+$metodo = $_SERVER['REQUEST_METHOD'];
 
-	//4) Verificando tipo de requisição
-	$metodo = $_SERVER['REQUEST_METHOD'];
+if ($metodo == 'GET') {
 
-	if($metodo == 'GET')
-	{
-		$sql = "SELECT * FROM comidinhas";
-		$resultado = mysqli_query($conexao,$sql);
+    $sql = "SELECT * FROM comidinhas";
+    $resultado = mysqli_query($conexao, $sql);
 
-		//Array para receber o select
-		$comidinhas = [];
+    $comidinhas = [];
 
-		//Percorrer o resultado e salvar no array
-		while($linha = mysqli_fetch_array($resultado)) 
-		{
-			$comidinhas[] = $linha;
-		}
+    while ($linha = mysqli_fetch_assoc($resultado)) {
+        $comidinhas[] = $linha;
+    }
 
-		//Devolver pela API
-		echo json_encode($comidinhas);
-	}
+    echo json_encode($comidinhas);
+}
 
-	//Fechar a conexão
-	mysqli_close($conexao);
+if ($metodo == 'POST') {
+
+    $dadosRequest = file_get_contents("php://input");
+
+    $dados = json_decode($dadosRequest, true);
+
+    $nome = $dados['nome'];
+    $descricao = $dados['descricao'];
+
+    $sql = "INSERT INTO comidinhas(nome, descricao)
+            VALUES ('$nome', '$descricao')";
+
+    mysqli_query($conexao, $sql);
+
+    echo json_encode([
+        "mensagem" => "Dados inseridos com sucesso!!! BB!"
+    ]);
+}
+
+if ($metodo == 'DELETE') {
+
+    if (isset($_GET['id'])) {
+
+        $id = $_GET['id'];
+
+        $sql = "DELETE FROM comidinhas WHERE id = $id";
+
+        mysqli_query($conexao, $sql);
+
+        echo json_encode([
+            "mensagem" => "Item deletado com sucesso, meu consagrado!!!"
+        ]);
+
+    } else {
+
+        echo json_encode([
+            "mensagem" => "Erro!!! ID não encontrado!!! seu otário!!!"
+        ]);
+    }
+}
+
+mysqli_close($conexao);
 
 ?>
