@@ -72,12 +72,55 @@
 
 
 <script>
+
+    function deletarComidinha()
+    {
+        //Pegando valor do input com o ID para ser deletado
+        //(Não temos o input ainda!!!!!!)
+        var id = document.getElementById("id").value;
+
+        if(id == "")
+        {
+            alert("Digite a #$@#@ do ID!!!!");
+
+            //Sai da function
+            return;
+        }
+
+
+        //Chamando a API e passando o id
+        fetch("apiRest.php" + "?id=" + id,
+        {
+            method: "DELETE"
+        })
+        .then(response => response.json())        
+        .then(dados => {
+
+            if(dados.mensagem)
+            {
+                alert(dados.mensagem);
+
+                //Apagando input do html
+                document.getElementById("id").value = "";
+
+            }
+            else
+            {
+                alert(dados.erro);
+            }
+        })
+    }
+
+
+
+
+
+
     //Enviando parâmetros no POST
     document.getElementById("formcadastro")
             .addEventListener("submit",function(event)
             {   
-                alert('TESTE');
-                //event.preventDefault();
+                event.preventDefault();
 
                 //Recuperando os valores do input
                 let nome = document.getElementById("nome").value;
@@ -87,7 +130,7 @@
                 fetch("apiRest.php",
                 { 
                     method: "POST",
-                    headers{"Content-Type:":"application/json"},
+                    headers: {"Content-Type":"application/json"},
                     body: JSON.stringify({
                                             nome: nome,
                                             descricao: descricao
@@ -102,6 +145,11 @@
                                  });
 
             });//Evento do envio do form
+
+
+
+
+
 
 </script>
 
