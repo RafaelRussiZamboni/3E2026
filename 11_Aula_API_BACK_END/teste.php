@@ -35,7 +35,7 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form id="formcadastro">
                         <div class="mb-3">
                             <label class="form-label">
                                 Nome
@@ -71,6 +71,39 @@
 </div>
 
 
+<script>
+    //Enviando parâmetros no POST
+    document.getElementById("formcadastro")
+            .addEventListener("submit",function(event)
+            {   
+                alert('TESTE');
+                //event.preventDefault();
+
+                //Recuperando os valores do input
+                let nome = document.getElementById("nome").value;
+                let descricao =document.getElementById("descricao").value;
+
+                //Montando o cabeçalho para passar os valores
+                fetch("apiRest.php",
+                { 
+                    method: "POST",
+                    headers{"Content-Type:":"application/json"},
+                    body: JSON.stringify({
+                                            nome: nome,
+                                            descricao: descricao
+                                        })//corpo com os campos
+                }).then(response => response.json())
+                  .then(dados => {
+                                    //Resposta da API
+                                    alert(dados.mensagem);
+
+                                    //Limpando o form
+                                    document.getElementById("formcadastro").reset();
+                                 });
+
+            });//Evento do envio do form
+
+</script>
 
 
 </body>
